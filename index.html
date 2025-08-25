@@ -186,30 +186,24 @@
       </div>
 
       <!-- Reviews -->
-      <section id="reviews" class="section dark" aria-labelledby="reviews-heading">
+      <section id="reviews" class="section section--dark">
         <div class="container">
-          <h2 id="reviews-heading" class="section-title">REVIEWS</h2>
-          <div class="badge">100% recommend (11 reviews) · <a class="text-link" target="_blank" rel="noopener" href="https://www.facebook.com/people/Home-Hero-Remodeling/61550628197969/">See more on Facebook</a></div>
-          <div class="reviews-grid">
-            <article class="card review reveal">
-              <div class="avatar" aria-hidden="true">A</div>
-              <h3 class="name">Alicia P.</h3>
-              <p class="quote">“On time, professional, and beautiful work. Highly recommend.”</p>
-              <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-            </article>
-            <article class="card review reveal">
-              <div class="avatar" aria-hidden="true">M</div>
-              <h3 class="name">Michael R.</h3>
-              <p class="quote">“Our kitchen looks brand new. Great communication throughout.”</p>
-              <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-            </article>
-            <article class="card review reveal">
-              <div class="avatar" aria-hidden="true">S</div>
-              <h3 class="name">Sofia L.</h3>
-              <p class="quote">“Clean, careful, and detail-oriented. Five stars.”</p>
-              <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-            </article>
+          <h2 class="section-title">REVIEWS</h2>
+          <div class="section-subtitle">
+            <strong>100% recommend (11 reviews)</strong> ·
+            <a href="https://www.facebook.com/people/Home-Hero-Remodeling/61550628197969/" target="_blank" rel="noopener">See more on Facebook</a>
           </div>
+
+          <div class="reviews-carousel" aria-label="Customer reviews carousel">
+            <div class="reviews-track" id="reviews-track" role="list"></div>
+
+            <!-- Управление -->
+            <button class="reviews-nav prev" aria-label="Previous review" data-dir="-1">‹</button>
+            <button class="reviews-nav next" aria-label="Next review" data-dir="1">›</button>
+            <button class="reviews-toggle" id="reviews-toggle" aria-pressed="true" aria-label="Pause autoplay">Pause</button>
+          </div>
+
+          <noscript><p>Enable JavaScript to view Facebook review embeds.</p></noscript>
         </div>
       </section>
 

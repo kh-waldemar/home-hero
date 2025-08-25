@@ -247,3 +247,101 @@ function initGA(measurementId) {
   // Placeholder: user can insert GA4 gtag script later if desired.
   console.info('GA init placeholder', measurementId);
 }
+
+// Reviews carousel (infinite marquee-style with lazy iframes)
+async function initReviewsCarousel() {
+  const track = document.getElementById('reviews-track');
+  if (!track) return;
+
+  try {
+    const res = await fetch('assets/reviews-embeds.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to load embeds');
+    const embeds = await res.json();
+
+    const makeSlide = (item) => {
+      const slide = document.createElement('div');
+      slide.className = 'review-slide';
+      const h = Math.max(200, Math.min(item.height || 300, 420));
+      slide.innerHTML = `<iframe loading="lazy" data-src="${item.src}" height="${h}" scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen="true"></iframe>`;
+      return slide;
+    };
+
+    const viewportW = track.parentElement.clientWidth || window.innerWidth;
+    let widthSum = 0, idx = 0;
+    while (widthSum < viewportW * 2 && embeds.length) {
+      const item = embeds[idx % embeds.length];
+      const slide = makeSlide(item);
+      track.appendChild(slide);
+      widthSum += 376; // approx slide width + gap
+      idx++;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const iframe = e.target.querySelector('iframe');
+          if (iframe && !iframe.src) iframe.src = iframe.dataset.src;
+          io.unobserve(e.target);
+        }
+      });
+    }, { root: track.parentElement, rootMargin: '800px' });
+    Array.from(track.children).forEach(slide => io.observe(slide));
+
+    let offset = 0;
+    let speed = 40; // px/s
+    let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let last = performance.now();
+
+    const step = (now) => {
+      if (!playing) { last = now; return requestAnimationFrame(step); }
+      const dt = (now - last) / 1000; last = now;
+      offset -= speed * dt;
+      track.style.transform = `translateX(${offset}px)`;
+      const first = track.firstElementChild;
+      if (first) {
+        const firstW = first.getBoundingClientRect().width + 16;
+        if (Math.abs(offset) > firstW) {
+          track.appendChild(first);
+          offset += firstW;
+          io.observe(track.lastElementChild);
+        }
+      }
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+
+    const root = track.parentElement;
+    const setPlay = (state) => {
+      playing = state;
+      const btn = document.getElementById('reviews-toggle');
+      if (btn) { btn.textContent = playing ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(playing)); }
+    };
+    root.addEventListener('mouseenter', () => setPlay(false));
+    root.addEventListener('mouseleave', () => setPlay(true));
+    document.getElementById('reviews-toggle')?.addEventListener('click', () => setPlay(!playing));
+
+    const nudge = (dir) => { offset += dir * 380; track.style.transform = `translateX(${offset}px)`; };
+    root.querySelector('.reviews-nav.prev')?.addEventListener('click', () => nudge(1));
+    root.querySelector('.reviews-nav.next')?.addEventListener('click', () => nudge(-1));
+
+    let dragging = false, startX = 0, startOffset = 0;
+    const startDrag = (x) => { dragging = true; setPlay(false); startX = x; startOffset = offset; };
+    const moveDrag  = (x) => { if (dragging) { offset = startOffset + (x - startX); track.style.transform = `translateX(${offset}px)`; } };
+    const endDrag   = () => { if (dragging) { dragging = false; setPlay(true); } };
+
+    root.addEventListener('pointerdown', e => { root.setPointerCapture(e.pointerId); startDrag(e.clientX); });
+    root.addEventListener('pointermove',  e => moveDrag(e.clientX));
+    root.addEventListener('pointerup',    endDrag);
+    root.addEventListener('pointercancel',endDrag);
+
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft')  nudge(1);
+      if (e.key === 'ArrowRight') nudge(-1);
+      if (e.key === ' ') { e.preventDefault(); setPlay(!playing); }
+    });
+  } catch (e) {
+    console.warn('Reviews carousel init failed', e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initReviewsCarousel);
