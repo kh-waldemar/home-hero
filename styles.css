@@ -47,9 +47,9 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
 /* Buttons */
 .btn { display: inline-block; padding: 14px 20px; border: 1px solid currentColor; text-decoration: none; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
 /* Primary CTA: green background, orange text */
-.btn-primary { background: var(--brand-green); color: var(--brand-orange); border-color: var(--brand-green); font-weight: 700; text-shadow: 0 0 0.25px rgba(0,0,0,.15); }
-.btn-primary:hover { background: var(--brand-green-600); color: var(--brand-orange); border-color: var(--brand-green-600); }
-.btn-primary:active { background: var(--brand-green-700); color: var(--brand-orange); border-color: var(--brand-green-700); }
+.btn-primary { background: var(--brand-green); color: #fff; border-color: var(--brand-green); font-weight: 700; text-shadow: 0 0 0.25px rgba(0,0,0,.15); }
+.btn-primary:hover { background: var(--brand-green-600); color: #fff; border-color: var(--brand-green-600); }
+.btn-primary:active { background: var(--brand-green-700); color: #fff; border-color: var(--brand-green-700); }
 .btn-primary:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 2px; }
 .btn-outline { color: var(--brand-orange); background: transparent; border-color: var(--brand-orange); }
 .btn-outline:hover, .btn-outline:focus { background: var(--brand-orange); color: var(--text-on-orange); }
@@ -87,6 +87,16 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .poster-frame { border: 1px solid #ddd; background: #fff; padding: 8px; display: inline-block; }
 .poster-frame img { display: block; width: 100%; height: auto; }
+
+/* Hero photo (no crop, no upscale) */
+.hero-photo { margin: 0; border: 1px solid #ddd; background: #fff; padding: 8px; display: inline-block; max-width: 100%; }
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(85vh, 800px);
+  object-fit: contain;
+}
 
 /* Services */
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
