@@ -77,10 +77,10 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
 .section.light { background: var(--paper); }
 
 /* Hero */
-.hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items: center; }
-.hero .subline { color: var(--muted); margin: 12px 0 24px; }
-.cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
-.hero-media { display: grid; gap: 16px; align-content: start; }
+.hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items: start; }
+.hero .subline { color: var(--muted); margin: 6px 0 6px; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+.hero-media { display: grid; gap: 16px; align-content: start; justify-self: end; }
 .marquee { overflow: hidden; border-top: 1px solid var(--muted); border-bottom: 1px solid var(--muted); padding: 10px 0; }
 .marquee-track { display: flex; gap: 48px; white-space: nowrap; will-change: transform; animation: marquee 20s linear infinite; }
 .marquee .marquee-track span { color: var(--brand-orange); }
@@ -101,13 +101,16 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
   object-fit: contain;
 }
 
-/* Make right image flush with container's right edge */
+/* Make right image full-bleed to viewport right edge */
 .hero .container { padding-right: 0; }
-.hero-media { justify-self: end; }
 .hero-photo { width: 100%; }
+/* Expand right column to bleed to viewport right while keeping left aligned */
+.hero-media { width: calc(100% + (50vw - 50%)); margin-right: calc(50% - 50vw); }
 
-/* Divider marquee at bottom of hero */
-.hero-marquee { margin-top: 12px; margin-bottom: 20px; }
+/* Divider marquee at bottom of hero: full-bleed and zero bottom gap */
+.hero-marquee { margin-top: 8px; margin-bottom: 0; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+.section.hero { padding-bottom: 0; }
+.hero + .section { padding-top: 0; border-top: 0; }
 
 /* Services */
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -198,6 +201,9 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
   .reviews-grid { grid-template-columns: 1fr; }
   .header-inner { grid-template-columns: 1fr auto; }
   .nav { display: none; }
+  /* keep hero text readable on narrow screens */
+  .hero .subline { margin: 8px 0 10px; }
+  .cta-row { margin-top: 6px; }
 }
 
 /* Dark section alias for carousel markup */
