@@ -1,8 +1,10 @@
 /* Root variables */
 :root {
-  /* Brand overrides */
-  --brand-green: #0d5e2b;
-  --brand-orange: #d48535;
+  /* Brand tokens (from logo) */
+  --brand-green: #0E6B38; /* primary */
+  --brand-green-600: #0C5F32; /* ~8% darker */
+  --brand-green-700: #0A512B; /* ~16% darker */
+  --brand-orange: #d48535; /* accent */
   --text-on-orange: #ffffff;
   --green-700: #0E6B38;
   --green-900: #0A4F2A;
@@ -44,8 +46,11 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
 
 /* Buttons */
 .btn { display: inline-block; padding: 14px 20px; border: 1px solid currentColor; text-decoration: none; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
-.btn-primary { background: var(--brand-orange); color: var(--text-on-orange); border-color: var(--brand-orange); }
-.btn-primary:hover, .btn-primary:focus { filter: brightness(0.92); }
+/* Primary CTA: green background, orange text */
+.btn-primary { background: var(--brand-green); color: var(--brand-orange); border-color: var(--brand-green); font-weight: 700; text-shadow: 0 0 0.25px rgba(0,0,0,.15); }
+.btn-primary:hover { background: var(--brand-green-600); color: var(--brand-orange); border-color: var(--brand-green-600); }
+.btn-primary:active { background: var(--brand-green-700); color: var(--brand-orange); border-color: var(--brand-green-700); }
+.btn-primary:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 2px; }
 .btn-outline { color: var(--brand-orange); background: transparent; border-color: var(--brand-orange); }
 .btn-outline:hover, .btn-outline:focus { background: var(--brand-orange); color: var(--text-on-orange); }
 .phone-btn { white-space: nowrap; }
