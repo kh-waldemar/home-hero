@@ -72,6 +72,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
 
 /* Sections */
 .section { padding: clamp(48px, 7vw, 120px) 0; border-top: 1px solid #eaeaea; }
+.section.hero { padding-top: clamp(16px, 2.8vw, 36px); }
 .section.dark { background: var(--ink-900); color: #fff; border-top-color: #242732; }
 .section.light { background: var(--paper); }
 
@@ -85,18 +86,28 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
 .marquee .marquee-track span { color: var(--brand-orange); }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.poster-frame { border: 1px solid #ddd; background: #fff; padding: 8px; display: inline-block; }
+/* Legacy poster styles (unused) */
+.poster-frame { border: 0; background: transparent; padding: 0; display: contents; }
 .poster-frame img { display: block; width: 100%; height: auto; }
 
 /* Hero photo (no crop, no upscale) */
-.hero-photo { margin: 0; border: 1px solid #ddd; background: #fff; padding: 8px; display: inline-block; max-width: 100%; }
+.hero-photo { margin: 0; border: 0; background: transparent; padding: 0; display: block; max-width: 100%; }
 .hero-photo img {
   display: block;
   width: 100%;
   height: auto;
   max-height: min(85vh, 800px);
   object-fit: contain;
+  max-width: none; /* allow natural width limit; container controls scaling */
 }
+
+/* Make right image flush with container's right edge */
+.hero .container { padding-right: 0; }
+.hero-media { justify-self: end; }
+.hero-photo { width: 100%; }
+
+/* Divider marquee at bottom of hero */
+.hero-marquee { margin-top: 12px; margin-bottom: 20px; }
 
 /* Services */
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -177,6 +188,8 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
   .process-grid { grid-template-columns: repeat(2, 1fr); }
   .reviews-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-grid { grid-template-columns: 1fr; }
+  .hero .container { padding-right: var(--gutter); }
+  .hero-media { justify-self: stretch; }
 }
 @media (max-width: 640px) {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
