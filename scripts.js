@@ -280,7 +280,24 @@ async function initReviewsCarousel() {
       entries.forEach(e => {
         if (e.isIntersecting) {
           const iframe = e.target.querySelector('iframe');
-          if (iframe && !iframe.src) iframe.src = iframe.dataset.src;
+          if (iframe && !iframe.src) {
+            const src = iframe.dataset.src;
+            iframe.src = src;
+            console.info('[reviews] loading', src);
+            // Fallback if not rendered in 5s
+            const slide = e.target;
+            const timer = setTimeout(() => {
+              if (!iframe.contentWindow || iframe.clientHeight === 0) {
+                const fb = document.createElement('div');
+                fb.className = 'review-fallback';
+                fb.innerHTML = `<div>Facebook embed blocked</div><a class="btn btn-ghost" target="_blank" rel="noopener" href="${src}">Open on Facebook</a>`;
+                slide.innerHTML = '';
+                slide.appendChild(fb);
+                console.warn('[reviews] fallback shown for', src);
+              }
+            }, 5000);
+            iframe.addEventListener('load', () => { clearTimeout(timer); });
+          }
           io.unobserve(e.target);
         }
       });
@@ -289,7 +306,7 @@ async function initReviewsCarousel() {
 
     let offset = 0;
     let speed = 40; // px/s
-    let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let last = performance.now();
 
     const step = (now) => {
@@ -310,14 +327,13 @@ async function initReviewsCarousel() {
     };
     requestAnimationFrame(step);
 
-    const root = track.parentElement;
+  const root = track.parentElement;
     const setPlay = (state) => {
       playing = state;
       const btn = document.getElementById('reviews-toggle');
       if (btn) { btn.textContent = playing ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(playing)); }
     };
-    root.addEventListener('mouseenter', () => setPlay(false));
-    root.addEventListener('mouseleave', () => setPlay(true));
+  // Continuous autoplay: no hover pause. Pause only by button or drag.
     document.getElementById('reviews-toggle')?.addEventListener('click', () => setPlay(!playing));
 
     const nudge = (dir) => { offset += dir * 380; track.style.transform = `translateX(${offset}px)`; };
@@ -325,9 +341,9 @@ async function initReviewsCarousel() {
     root.querySelector('.reviews-nav.next')?.addEventListener('click', () => nudge(-1));
 
     let dragging = false, startX = 0, startOffset = 0;
-    const startDrag = (x) => { dragging = true; setPlay(false); startX = x; startOffset = offset; };
-    const moveDrag  = (x) => { if (dragging) { offset = startOffset + (x - startX); track.style.transform = `translateX(${offset}px)`; } };
-    const endDrag   = () => { if (dragging) { dragging = false; setPlay(true); } };
+  const startDrag = (x) => { dragging = true; setPlay(false); startX = x; startOffset = offset; };
+  const moveDrag  = (x) => { if (dragging) { offset = startOffset + (x - startX); track.style.transform = `translateX(${offset}px)`; } };
+  const endDrag   = () => { if (dragging) { dragging = false; setPlay(true); } };
 
     root.addEventListener('pointerdown', e => { root.setPointerCapture(e.pointerId); startDrag(e.clientX); });
     root.addEventListener('pointermove',  e => moveDrag(e.clientX));

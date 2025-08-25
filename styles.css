@@ -182,6 +182,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
   align-items: stretch;
   gap: 16px;
   will-change: transform;
+  transform: translate3d(0,0,0);
 }
 .review-slide {
   flex: 0 0 auto;
@@ -197,6 +198,9 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
   height: 320px;
   border: 0;
 }
+/* Fallback card if iframe fails */
+.review-fallback { display: grid; place-items: center; text-align: center; color: #cbd5e1; gap: 10px; height: 320px; }
+.review-fallback .btn { font-size: 12px; padding: 8px 12px; }
 @media (min-width: 720px) { .review-slide { width: 340px; } }
 @media (min-width: 1080px){ .review-slide { width: 360px; } }
 
@@ -208,14 +212,12 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
   background: rgba(0,0,0,.35); color: #fff;
   display: grid; place-items: center;
   cursor: pointer;
+  z-index: 2;
 }
 .reviews-nav.prev { left: 8px; }
 .reviews-nav.next { right: 8px; }
-.reviews-toggle {
-  position: absolute; right: 56px; bottom: 8px;
-  font-size: 12px; padding: 6px 10px;
-  border: 1px solid var(--muted); border-radius: 999px; background: transparent; color:#fff;
-}
+.reviews-controls { display: grid; place-items: center; margin-top: 10px; }
+.reviews-toggle { font-size: 12px; padding: 6px 12px; border: 1px solid var(--muted); border-radius: 999px; background: transparent; color:#fff; }
 .reviews-nav:focus-visible, .reviews-toggle:focus-visible { outline: 2px solid var(--orange-500); }
 @media (prefers-reduced-motion: reduce) {
   .reviews-carousel { -webkit-mask-image: none; mask-image: none; }

@@ -72,3 +72,14 @@ Just open `index.html` in a browser, or serve the folder with any static server.
 Notes:
 - Update `robots.txt` and `sitemap.xml` if you change the repo name.
 - Replace the placeholder license image with your document.
+
+## Reviews — quick test checklist (Codespaces/Browser)
+
+1) Run a local server (for example in Codespaces):
+  - Python: `python3 -m http.server 8080 --bind 0.0.0.0`
+  - Open via Ports → 8080 → Open in Browser
+2) Allow third‑party cookies in your browser (Facebook embeds require it).
+3) If you see “This page isn’t available” inside a card:
+  - Open the post directly (button “Open on Facebook”), check it’s public.
+  - If it’s private or blocked for embed, replace the link in `assets/reviews-embeds.json` with another public review.
+  - You can get working embed links from Facebook → “Embed” code: copy the href.
