@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kh-waldemar.github.io/home-hero/sitemap.xml

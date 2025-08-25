@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="40" viewBox="0 0 200 40" role="img" aria-label="Home Hero Remodeling">
+  <defs>
+    <style>
+      .mark { fill: #0E6B38; }
+      .word { fill: #0A0C0F; font: 700 16px 'Space Grotesk', Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+    </style>
+  </defs>
+  <g>
+    <rect class="mark" x="0" y="0" width="40" height="40" rx="6"/>
+    <path d="M8 32V8h6v8h12V8h6v24h-6V22H14v10H8z" fill="#fff"/>
+    <text class="word" x="48" y="26">Home Hero Remodeling</text>
+  </g>
+</svg>
