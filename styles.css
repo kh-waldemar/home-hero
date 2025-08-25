@@ -94,11 +94,11 @@ h1, h2, h3 { font-family: 'Space Grotesk', Inter, Arial, sans-serif; letter-spac
 .hero-photo { margin: 0; border: 0; background: transparent; padding: 0; display: block; max-width: 100%; }
 .hero-photo img {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
   max-height: min(85vh, 800px);
   object-fit: contain;
-  max-width: none; /* allow natural width limit; container controls scaling */
 }
 
 /* Make right image flush with container's right edge */
