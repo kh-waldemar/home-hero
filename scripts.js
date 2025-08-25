@@ -260,9 +260,8 @@ async function initReviewsCarousel() {
 
     const makeSlide = (item) => {
       const slide = document.createElement('div');
-      slide.className = 'review-slide';
-      const h = Math.max(200, Math.min(item.height || 300, 420));
-      slide.innerHTML = `<iframe loading="lazy" data-src="${item.src}" height="${h}" scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen="true"></iframe>`;
+        slide.className = 'review-card';
+        slide.innerHTML = `<iframe loading="lazy" data-src="${item.src}" scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen="true"></iframe>`;
       return slide;
     };
 
@@ -336,7 +335,7 @@ async function initReviewsCarousel() {
   // Continuous autoplay: no hover pause. Pause only by button or drag.
     document.getElementById('reviews-toggle')?.addEventListener('click', () => setPlay(!playing));
 
-    const nudge = (dir) => { offset += dir * 380; track.style.transform = `translateX(${offset}px)`; };
+      const nudge = (dir) => { const w = (track.firstElementChild?.getBoundingClientRect().width || 360) + 24; offset += dir * w; track.style.transform = `translateX(${offset}px)`; };
     root.querySelector('.reviews-nav.prev')?.addEventListener('click', () => nudge(1));
     root.querySelector('.reviews-nav.next')?.addEventListener('click', () => nudge(-1));
 
